@@ -26,10 +26,6 @@ describe "Resque::Plugins::Unique" do
     end
   end
 
-  before :each do
-    Resque.redis.flushall
-  end
-
   it "passes Resque::Plugin.lint" do
     expect {
       Resque::Plugin.lint(Resque::Plugins::Unique)
