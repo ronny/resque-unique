@@ -2,7 +2,7 @@ module Resque
   module Plugins
     module Unique
       def lock(*args)
-        "unique:#{name}-#{args.map(&:to_sym).to_s}"
+        "unique:#{name}-#{normalised_args(*args).to_s}"
       end
 
       def lock_timeout
@@ -24,6 +24,10 @@ module Resque
       end
 
     private
+
+      def normalised_args(*args)
+        args.map {|arg| arg.to_s.to_sym}
+      end
 
       def lock_expires_at
         ((Time.now.to_f * 1_000).to_i + (lock_timeout * 1_000) + 1_000).to_i
